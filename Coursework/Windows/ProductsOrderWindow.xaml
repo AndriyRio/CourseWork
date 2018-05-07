@@ -1,0 +1,16 @@
+﻿<Window x:Class="Coursework.Windows.ProductsOrderWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Coursework.Windows"
+        mc:Ignorable="d"
+        Title="Управління продуктами для замовлення" Height="250" Width="300"
+        ResizeMode="NoResize">
+    <Grid>
+        <ComboBox FontSize="14" Name="AddProductComboBox" HorizontalAlignment="Left" Margin="10,10,10,10" VerticalAlignment="Top" Width="275" Height="30"/>
+        <ComboBox FontSize="14" Name="RemoveProductComboBox" HorizontalAlignment="Left" Margin="10,115,0,0" VerticalAlignment="Top" Width="275" Height="30"/>
+        <Button Content="Додати товар" HorizontalAlignment="Left" Margin="50,50,0,0" VerticalAlignment="Top" Width="200" Click="Button_Click"/>
+        <Button Content="Вилучити товар" HorizontalAlignment="Left" Margin="50,160,0,0" VerticalAlignment="Top" Width="200" Click="Button_Click_1"/>
+    </Grid>
+</Window>

@@ -1,0 +1,285 @@
+﻿<Window x:Class="Coursework.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Coursework"
+        mc:Ignorable="d"
+        Title="Магазин столярних виробів" Height="800" Width="1200"
+        Background="{DynamicResource MaterialDesignPaper}"
+        FontFamily="{DynamicResource MaterialDesignFont}">
+
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <StackPanel>
+            <Grid>
+                <Label  HorizontalAlignment="Left" FontSize="18" FontWeight="Bold">Управління магазином столярних виробів</Label>
+                <Label HorizontalAlignment="Right" FontSize="14" Name="UserLabel" Margin="0,8,160,0"></Label>
+                <Button HorizontalAlignment="Right" Content="Вийти" Width="150" Height="30" Margin="3,3,3,3" Click="LogOutBtn_Click"/>
+            </Grid>
+
+            <TabControl HorizontalAlignment="Left"  VerticalAlignment="Top">
+                <TabItem Header="Працівники" FontSize="14">
+                    <StackPanel>
+                        <DataGrid Height="370" ColumnWidth = "*" HeadersVisibility="Column" IsReadOnly="True" HorizontalAlignment="Left" VerticalAlignment="Top" x:Name="EmployeesDataGrid" AutoGenerateColumns="False" SelectionChanged="EmployeesDataGrid_SelectionChanged">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="Ім'я"  Binding="{Binding firstName}"/>
+                                <DataGridTextColumn Header="Прізвище" Binding="{Binding lastName}"/>
+                                <DataGridTextColumn Header="Дата народження" Binding="{Binding dataOfBirth, StringFormat=\{0:d/MM/yyyy\}}"/>
+                                <DataGridTextColumn Header="Номер телефону" Binding="{Binding phoneNumber}"/>
+                                <DataGridTextColumn Header="Адрес" Binding="{Binding address}"/>
+                                <DataGridTextColumn Header="Дата найму" Binding="{Binding hireDate, StringFormat=\{0:d/MM/yyyy\}}"/>
+                                <DataGridTextColumn Header="Ранг" Binding="{Binding Rank.rank1}"/>
+                                <DataGridTemplateColumn>
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <Button Click="RemoveEmployeeBtn_Click" Content="Видалити"/>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+                                <DataGridTemplateColumn>
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <Button Click="EditEmployeeBtn_Click" Content="Редагувати"/>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                        <Button Margin="0, 20, 0, 0" Width="250" Height="40" HorizontalAlignment="Center" VerticalAlignment="Bottom" Click="AddEmployeeBtn_Click" Content="Додати працівника"/>
+                        <Label Margin="0, 20, 0, 0" HorizontalAlignment="Left" FontSize="16" Height="32" Width="450" Content="Замовлення, над якими працює вибраний працівник:" RenderTransformOrigin="0.499,0.17"/>
+                        <DataGrid Height="200" ColumnWidth = "*" HeadersVisibility="Column" IsReadOnly="True" x:Name="EmployeeOrdersList" AutoGenerateColumns="False" FontSize="14">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="Номер замовлення"  Binding="{Binding orderID}"/>
+                                <DataGridTextColumn Header="Дата початку робіт" Binding="{Binding orderDate, StringFormat=\{0:d/MM/yyyy\}}"/>
+                                <DataGridTextColumn Header="Дата закічення замовлення" Binding="{Binding payDate, StringFormat=\{0:d/MM/yyyy\}}"/>
+                                <DataGridTextColumn Header="Cтатус оплати" Binding="{Binding paymentStatus}"/>
+                                <DataGridTextColumn Header="Cтатус доставки" Binding="{Binding deliveredStatus}"/>
+                            </DataGrid.Columns>
+                        </DataGrid>
+
+                    </StackPanel>
+                </TabItem>
+                <TabItem Header="Замовлення" FontSize="14" >
+                    <StackPanel>
+                        <DataGrid Height="300" ColumnWidth = "*" FontSize="14" HeadersVisibility="Column" IsReadOnly="True" HorizontalAlignment="Left" AutoGenerateColumns="False" VerticalAlignment="Top" x:Name="OrdersDataGrid" SelectionChanged="OrdersDataGrid_SelectionChanged">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="Номер замовлення"  Binding="{Binding orderID}"/>
+                                <DataGridTextColumn Header="Дата замовлення" Binding="{Binding orderDate, StringFormat=\{0:d/MM/yyyy\}}"/>
+                                <DataGridTextColumn Header="Дата завершення замовлення" Binding="{Binding payDate, StringFormat=\{0:d/MM/yyyy\}}"/>
+                                <DataGridTextColumn Header="Знижка" Binding="{Binding discount}"/>
+                                <DataGridTextColumn Header="Cтатус оплати" Binding="{Binding paymentStatus}"/>
+                                <DataGridTextColumn Header="Cтатус доставки" Binding="{Binding deliveredStatus}"/>
+                                <DataGridTextColumn Header="Ім'я клієнта" Binding="{Binding Сlient.firstName}"/>
+                                <DataGridTextColumn Header="Прізвище клієнта" Binding="{Binding Сlient.lastName}"/>
+                                <DataGridTemplateColumn>
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <Button Click="OrderEmpoyeesBtn_Click" Content="Працівники"/>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+                                <DataGridTemplateColumn>
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <Button Click="OrderProductsBtn_Click" Content="Товар"/>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+                                <DataGridTemplateColumn>
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <Button Click="RemoveOrderBtn_Click" Content="Видалити"/>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+                                <DataGridTemplateColumn>
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <Button Click="EditOrderBtn_Click" Content="Редагувати"/>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+
+                            </DataGrid.Columns>
+                        </DataGrid>
+                        <Button Margin="0, 20, 0, 0" Width="250" Height="40" HorizontalAlignment="Center" VerticalAlignment="Bottom" Click="AddOrderBtn_Click" Content="Додати замовлення"/>
+                        <Label FontSize="16" Content="Товар, який вхоить у вибране замовлення:"/>
+                        <DataGrid Height="200" ColumnWidth = "*" HeadersVisibility="Column" IsReadOnly="True" x:Name="OrderProductsDataGrid" AutoGenerateColumns="False" FontSize="14">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="Назва"  Binding="{Binding name}"/>
+                                <DataGridTextColumn Header="Категорія" Binding="{Binding Categorie.name}"/>
+                                <DataGridTextColumn Header="Виробник" Binding="{Binding Manufacturer.name}"/>
+                                <DataGridTextColumn Header="Ціна" Binding="{Binding price}"/>
+                                <DataGridTextColumn Header="Дата виготовлення" Binding="{Binding manufacturedDate, StringFormat=\{0:d/MM/yyyy\}}"/>
+                                <DataGridTextColumn Header="Дата доставки на склад" Binding="{Binding importDate, StringFormat=\{0:d/MM/yyyy\}}"/>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                        <Label FontSize="16" Margin="0,15,0,0" Content="Працівники, які працюють над вибраним замовленням:"/>
+                        <DataGrid Height="200" ColumnWidth = "*" HeadersVisibility="Column" IsReadOnly="True" x:Name="OrderEmployeesDataGrid" AutoGenerateColumns="False" FontSize="14">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="Ім'я"  Binding="{Binding firstName}"/>
+                                <DataGridTextColumn Header="Прізвище" Binding="{Binding lastName}"/>
+                                <DataGridTextColumn Header="Дата народження" Binding="{Binding dataOfBirth, StringFormat=\{0:d/MM/yyyy\}}"/>
+                                <DataGridTextColumn Header="Номер телефону" Binding="{Binding phoneNumber}"/>
+                                <DataGridTextColumn Header="Адрес" Binding="{Binding address}"/>
+                                <DataGridTextColumn Header="Дата найму" Binding="{Binding hireDate, StringFormat=\{0:d/MM/yyyy\}}"/>
+                                <DataGridTextColumn Header="Ранг" Binding="{Binding Rank.rank1}"/>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </StackPanel>
+                </TabItem>
+                <TabItem Header="Клієнти" FontSize="14">
+                    <StackPanel>
+                        <DataGrid Height="580" ColumnWidth = "*" HeadersVisibility="Column" IsReadOnly="True" HorizontalAlignment="Left" FontSize="14" VerticalAlignment="Top" x:Name="ClientsDataGrid" AutoGenerateColumns="False">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="Ім'я"  Binding="{Binding firstName}"/>
+                                <DataGridTextColumn Header="Прізвище" Binding="{Binding lastName}"/>
+                                <DataGridTextColumn Header="Дата народження" Binding="{Binding dateOfBirth, StringFormat=\{0:d/MM/yyyy\}}"/>
+                                <DataGridTextColumn Header="Номер телефону" Binding="{Binding phoneNumber}"/>
+                                <DataGridTextColumn Header="Адрес" Binding="{Binding address}"/>
+                                <DataGridTextColumn Header="Електронна пошта" Binding="{Binding e_mail}"/>
+
+                                <DataGridTemplateColumn>
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <Button Click="RemoveClientBtn_Click" Content="Видалити"/>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+                                <DataGridTemplateColumn>
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <Button Click="EditСlientBtn_Click" Content="Редагувати"/>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+
+                            </DataGrid.Columns>
+                        </DataGrid>
+                        <Button Margin="0, 20, 0, 0" Width="250" Height="40" HorizontalAlignment="Center" VerticalAlignment="Bottom" Click="AddClientBtn_Click" Content="Додати клієнта"/>
+                    </StackPanel>
+                </TabItem>
+                <TabItem Header="Товар" FontSize="14">
+                    <StackPanel>
+                        <DataGrid Height="580" ColumnWidth = "*" HeadersVisibility="Column" IsReadOnly="True" HorizontalAlignment="Left" FontSize="14" VerticalAlignment="Top" x:Name="ProductsDataGrid" AutoGenerateColumns="False">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="Назва"  Binding="{Binding name}"/>
+                                <DataGridTextColumn Header="Категорія" Binding="{Binding Categorie.name}"/>
+                                <DataGridTextColumn Header="Дата виготовлення" Binding="{Binding manufacturedDate, StringFormat=\{0:d/MM/yyyy\}}"/>
+                                <DataGridTextColumn Header="Дата доставки" Binding="{Binding importDate, StringFormat=\{0:d/MM/yyyy\}}"/>
+                                <DataGridTextColumn Header="Виробник" Binding="{Binding Manufacturer.name}"/>
+                                <DataGridTextColumn Header="Ціна" Binding="{Binding price}"/>
+                                <DataGridTemplateColumn>
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <Button Click="RemoveProductBtn_Cick" Content="Видалити"/>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+                                <DataGridTemplateColumn>
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <Button Click="EditProductBtn_Cick" Content="Редагувати"/>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                        <Button Margin="0, 20, 0, 0" Width="250" Height="40" HorizontalAlignment="Center" VerticalAlignment="Bottom" Click="AddProduct_Click" Content="Додати товар"/>
+                    </StackPanel>
+                </TabItem>
+                <TabItem Header="Виробники" FontSize="14">
+                    <StackPanel>
+                        <DataGrid Height="580" ColumnWidth = "*" HeadersVisibility="Column" IsReadOnly="True" HorizontalAlignment="Left" FontSize="14" VerticalAlignment="Top" x:Name="ManufacturerDataGrid" AutoGenerateColumns="False">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="Ім'я"  Binding="{Binding name}"/>
+                                <DataGridTextColumn Header="Електронна пошта" Binding="{Binding e_mail}"/>
+                                <DataGridTextColumn Header="Номер телефону" Binding="{Binding phoneNumber}"/>
+                                <DataGridTemplateColumn>
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <Button Click="RemoveManufacturerBtn_Click" Content="Видалити"/>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+                                <DataGridTemplateColumn>
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <Button Click="EditManufacturerBtn_Click" Content="Редагувати"/>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                        <Button Margin="0, 20, 0, 0" Width="250" Height="40" HorizontalAlignment="Center" VerticalAlignment="Bottom" Click="AddManufacturerBtn_Click" Content="Додати виробника"/>
+                    </StackPanel>
+                </TabItem>
+                <TabItem Header="Платежі" Name="PaymnetsTabItem" FontSize="14">
+                    <StackPanel>
+                        <DataGrid Height="580" ColumnWidth = "*" HeadersVisibility="Column" IsReadOnly="True" HorizontalAlignment="Left" FontSize="14" VerticalAlignment="Top" x:Name="PaymentsDataGrid" AutoGenerateColumns="False">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="Номер платежу"  Binding="{Binding paymentID}"/>
+                                <DataGridTextColumn Header="Cума платежу" Binding="{Binding amountPaid}"/>
+                                <DataGridTextColumn Header="Дата платежу" Binding="{Binding chequeDate, StringFormat=\{0:d/MM/yyyy\}}"/>
+                                <DataGridTextColumn Header="Номер замовлення" Binding="{Binding Order.orderID}"/>
+                                <DataGridTextColumn Header="Спосіб оплати" Binding="{Binding PaymentMode.pmode}"/>
+                                <DataGridTemplateColumn>
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <Button Click="RemovePaymetBtn_Click" Content="Видалити"/>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                        <Button Margin="0, 20, 0, 0" Width="250" Height="40" HorizontalAlignment="Center" VerticalAlignment="Bottom" Click="AddPaymentBtn_Click" Content="Додати платіж"/>
+                    </StackPanel>
+                </TabItem>
+                <TabItem Header="Категорії товару" Name="CategorieTabItem" FontSize="14">
+                    <StackPanel>
+                        <DataGrid Height="580" ColumnWidth = "*" HeadersVisibility="Column" IsReadOnly="True" HorizontalAlignment="Left" FontSize="14" VerticalAlignment="Top" x:Name="CategoriesDataGrid" AutoGenerateColumns="False">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="Категорія"  Binding="{Binding name}"/>
+                                <DataGridTemplateColumn>
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <Button Content="Видалити" Click="RemoveCategorieBtn_Click"/>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                        <Button Margin="0, 20, 0, 0" Width="250" Height="40" HorizontalAlignment="Center" VerticalAlignment="Bottom"  Click="AddCategorieBtn_Click" Content="Додати категорію"/>
+                    </StackPanel>
+                </TabItem>
+                <TabItem Header="Користувачі" Name="UserTabItem" FontSize="14">
+                    <StackPanel>
+                        <DataGrid Height="580" ColumnWidth = "*" HeadersVisibility="Column" IsReadOnly="True" HorizontalAlignment="Left" FontSize="14" VerticalAlignment="Top" x:Name="UsersDataGrid" AutoGenerateColumns="False">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="Логін"  Binding="{Binding login}"/>
+                                <DataGridTextColumn Header="Пароль"  Binding="{Binding password}"/>
+                                <DataGridTextColumn Header="Роль"  Binding="{Binding Role.userRole}"/>
+                                <DataGridTemplateColumn>
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <Button Content="Видалити" Click="RemoveUserBtn_Click"/>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+                                <DataGridTemplateColumn>
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <Button Content="Редагувати" Click="EditUserBtn_Click"/>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                        <Button Margin="0, 20, 0, 0" Width="250" Height="40" HorizontalAlignment="Center" VerticalAlignment="Bottom"  Click="AddUserBtn_Click" Content="Додати користувача"/>
+                    </StackPanel>
+                </TabItem>
+            </TabControl>
+        </StackPanel>
+    </ScrollViewer>
+   
+</Window>
